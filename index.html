@@ -29,60 +29,68 @@ html,body{height:100%;margin:0;font-family:Arial,sans-serif}#app{height:100%;dis
 <label><input id="immersion" type="checkbox"> Immersion / DLI only</label>
 <label><input id="public" type="checkbox"> Public schools only</label></div>
 <div class="legend"><span class="s10">10 Hottest</span><span class="s9">9 Hot</span><span class="s8">8 Warm</span><span class="s7">≤7 Cooler</span><span class="program">🎒 Chinese program</span></div>
-<p class="note">Academic heat and Chinese-language access are separate. Purple 🎒 markers do not raise academic scores. Verify current ratings, programs and exact attendance boundaries before buying.</p>
+<p class="note">Locations are generated from verified campus street addresses instead of hand-entered coordinates. Academic heat and Chinese-language access are separate. Purple 🎒 markers do not raise academic scores. Verify current ratings, programs and exact attendance boundaries before buying.</p>
 </aside><div id="map"></div></div>
 <script src="https://unpkg.com/maplibre-gl@5.7.1/dist/maplibre-gl.js"></script>
 <script>
 const map=new maplibregl.Map({container:'map',style:'https://tiles.openfreemap.org/styles/liberty',center:[-117.76,33.99],zoom:10,maxZoom:20});
 map.addControl(new maplibregl.NavigationControl(),'top-right');
 const schools=[
-['Maple Hill Elementary','Diamond Bar',34.0005,-117.8218,'elementary',10,'',1,0],
-['Diamond Bar High School','Diamond Bar',33.9854,-117.8298,'high',10,'',1,0],
-['Quail Summit Elementary','Diamond Bar',33.9978,-117.8077,'elementary',9,'',1,0],
-['Chaparral Middle School','Diamond Bar',34.0084,-117.8126,'middle',10,'',1,0],
-['Lorbeer Middle — Mandarin DLI','Diamond Bar',34.0155,-117.811,'middle',7,'mandarin',1,1],
-['Pantera Elementary — Mandarin DLI','Diamond Bar',34.019,-117.8125,'elementary',9,'mandarin',1,1],
-['New Era Chinese Academy @ Pantera','Diamond Bar',34.019,-117.8125,'afterschool',0,'mandarin',0,0],
-['Walnut Elementary — Mandarin DLI','Walnut',34.02,-117.864,'elementary',10,'mandarin',1,1],
-['Walnut High School','Walnut',34.0207,-117.8548,'high',10,'',1,0],
-['South Pointe Middle — Mandarin pathway','Walnut',34.0314,-117.8482,'middle',10,'mandarin',1,1],
-['Suzanne Middle School','Walnut',34.0265,-117.8597,'middle',9,'',1,0],
-['Vejar Elementary','Walnut',34.029,-117.8608,'elementary',9,'',1,0],
-['Walnut Chinese Language Center','Walnut',34.0116,-117.8569,'afterschool',0,'mandarin',0,0],
-['Learning Tree Chinese Program','Walnut',34.0141,-117.8542,'afterschool',0,'chinese',0,0],
-['Shelyn Elementary — Mandarin DLI','Rowland Heights',33.9798,-117.8788,'elementary',8,'mandarin',1,1],
-['Rowland High School','Rowland Heights',33.9791,-117.888,'high',8,'',1,0],
-['American Chinese School','Rowland Heights',33.9814,-117.8937,'afterschool',0,'mandarin',0,0],
-['Arovista Elementary','Brea',33.91269,-117.91069,'elementary',8,'',1,0],
-['Brea Country Hills Elementary','Brea',33.92048,-117.87307,'elementary',9,'',1,0],
-['Falcon Academy of Science & Technology','Brea',33.92941,-117.88616,'elementary',8,'',1,0],
-['Laurel Elementary Magnet','Brea',33.91751,-117.89705,'elementary',8,'',1,0],
-['Mariposa Elementary','Brea',33.93456,-117.89667,'elementary',9,'',1,0],
-['Olinda Elementary','Brea',33.91825,-117.85243,'elementary',10,'',1,0],
-['Brea Junior High','Brea',33.92582,-117.8951,'middle',8,'',1,0],
-['Brea Olinda High School','Brea',33.93324,-117.87593,'high',9,'',1,0],
-['Park View Elementary','Ontario',34.0267,-117.5787,'elementary',10,'',1,0],
-['Liberty Elementary','Ontario',34.0272,-117.641,'elementary',9,'',1,0],
-['Edison Elementary','Ontario',34.0702,-117.645,'elementary',9,'',1,0],
-['Central Language Academy','Ontario',34.0684,-117.6467,'elementary',8,'mandarin',1,0],
-['De Anza Middle School','Ontario',34.0482,-117.6365,'middle',8,'',1,0],
-["Children's Montessori — Mandarin After School",'Ontario',34.045,-117.6535,'afterschool',0,'mandarin',0,0],
-['Orion International Academy — Chinese Clubs','Ontario',34.0492,-117.6895,'afterschool',0,'chinese',0,0]
-].map(x=>({name:x[0],city:x[1],lat:x[2],lng:x[3],level:x[4],score:x[5],lang:x[6],pub:!!x[7],imm:!!x[8]}));
+['Castle Rock Elementary','Diamond Bar','2975 Castle Rock Rd, Diamond Bar, CA 91765','elementary',9,'',1,0],
+['Evergreen Elementary','Diamond Bar','2450 S Evergreen Springs Dr, Diamond Bar, CA 91765','elementary',9,'',1,0],
+['Maple Hill Elementary','Diamond Bar','1350 S Maple Hill Rd, Diamond Bar, CA 91765','elementary',10,'',1,0],
+['Quail Summit Elementary','Diamond Bar','23330 Quail Summit Dr, Diamond Bar, CA 91765','elementary',9,'',1,0],
+['Chaparral Middle School','Diamond Bar','1405 S Spruce Tree Dr, Diamond Bar, CA 91765','middle',10,'',1,0],
+['Diamond Bar High School','Diamond Bar','21400 E Pathfinder Rd, Diamond Bar, CA 91765','high',10,'',1,0],
+['Lorbeer Middle — Mandarin DLI','Diamond Bar','501 S Diamond Bar Blvd, Diamond Bar, CA 91765','middle',7,'mandarin',1,1],
+['Pantera Elementary — Mandarin DLI','Diamond Bar','801 Pantera Dr, Diamond Bar, CA 91765','elementary',9,'mandarin',1,1],
+['New Era Chinese Academy @ Pantera','Diamond Bar','801 Pantera Dr, Diamond Bar, CA 91765','afterschool',0,'mandarin',0,0],
+['Walnut Elementary — Mandarin DLI','Walnut','841 S Glenwick Ave, Walnut, CA 91789','elementary',10,'mandarin',1,1],
+['Walnut High School','Walnut','400 N Pierre Rd, Walnut, CA 91789','high',10,'',1,0],
+['South Pointe Middle — Mandarin pathway','Walnut','20671 Larkstone Dr, Walnut, CA 91789','middle',10,'mandarin',1,1],
+['Suzanne Middle School','Walnut','525 Suzanne Rd, Walnut, CA 91789','middle',9,'',1,0],
+['Vejar Elementary (WVUSD)','Walnut','20222 Vejar Rd, Walnut, CA 91789','elementary',9,'',1,0],
+['C.J. Morris Elementary','Walnut','19875 E Calle Baja, Walnut, CA 91789','elementary',9,'',1,0],
+['Collegewood Elementary','Walnut','20725 E Collegewood Dr, Walnut, CA 91789','elementary',9,'',1,0],
+['Westhoff Elementary','Walnut','20151 Amar Rd, Walnut, CA 91789','elementary',9,'',1,0],
+['Walnut Chinese Language Center','Walnut','20850 Carrey Rd, Walnut, CA 91789','afterschool',0,'mandarin',0,0],
+['Shelyn Elementary — Mandarin DLI','Rowland Heights','19500 E Nacora St, Rowland Heights, CA 91748','elementary',8,'mandarin',1,1],
+['Blandford Elementary','Rowland Heights','2601 S Blandford Dr, Rowland Heights, CA 91748','elementary',7,'',1,0],
+['Jellick Elementary','Rowland Heights','1400 S Jellick Ave, Rowland Heights, CA 91748','elementary',7,'',1,0],
+['Killian Elementary','Rowland Heights','19100 E Killian Ave, Rowland Heights, CA 91748','elementary',7,'',1,0],
+['Rowland Elementary','Rowland Heights','2036 S Fullerton Rd, Rowland Heights, CA 91748','elementary',7,'',1,0],
+['Rowland High School','Rowland Heights','2000 S Otterbein Ave, Rowland Heights, CA 91748','high',8,'',1,0],
+['American Chinese School @ Killian','Rowland Heights','19100 E Killian Ave, Rowland Heights, CA 91748','afterschool',0,'mandarin',0,0],
+['Arovista Elementary','Brea','900 Eadington Dr, Brea, CA 92821','elementary',8,'',1,0],
+['Brea Country Hills Elementary','Brea','150 N Associated Rd, Brea, CA 92821','elementary',9,'',1,0],
+['Falcon Academy of Science & Technology','Brea','650 N Apricot Ave, Brea, CA 92821','elementary',8,'',1,0],
+['Laurel Elementary Magnet','Brea','200 S Flower Ave, Brea, CA 92821','elementary',8,'',1,0],
+['Mariposa Elementary','Brea','1111 W Mariposa Dr, Brea, CA 92821','elementary',9,'',1,0],
+['Olinda Elementary','Brea','3145 E Birch St, Brea, CA 92821','elementary',10,'',1,0],
+['Brea Junior High','Brea','400 N Brea Blvd, Brea, CA 92821','middle',8,'',1,0],
+['Brea Olinda High School','Brea','789 N Wildcat Way, Brea, CA 92821','high',9,'',1,0],
+['Brea Canyon High School','Brea','689 N Wildcat Way, Brea, CA 92821','high',7,'',1,0],
+['Park View Elementary','Ontario','4860 S Celebration Ave, Ontario, CA 91761','elementary',10,'',1,0],
+['Edison Academy','Ontario','515 E 6th St, Ontario, CA 91764','elementary',9,'',1,0],
+['Central Language Academy','Ontario','415 E G St, Ontario, CA 91764','elementary',8,'',1,0],
+['De Anza Middle School','Ontario','1450 S Sultana Ave, Ontario, CA 91761','middle',8,'mandarin',1,0]
+].map(x=>({name:x[0],city:x[1],address:x[2],level:x[3],score:x[4],lang:x[5],pub:!!x[6],imm:!!x[7]}));
 let markers=[];
+async function geocode(s){const k='schoolgeo:'+s.address;const old=localStorage.getItem(k);if(old){[s.lng,s.lat]=JSON.parse(old);return;}try{const u='https://photon.komoot.io/api/?limit=1&q='+encodeURIComponent(s.address);const j=await fetch(u).then(r=>r.json());if(j.features&&j.features.length){[s.lng,s.lat]=j.features[0].geometry.coordinates;localStorage.setItem(k,JSON.stringify([s.lng,s.lat]));}}catch(e){console.warn('Geocode failed',s.name,e);}}
+async function locateAll(){await Promise.all(schools.map(geocode));render();}
 const checked=c=>[...document.querySelectorAll(c+':checked')].map(x=>x.value);
 const scoreClass=s=>s>=10?'s10':s>=9?'s9':s>=8?'s8':'s7';
 function render(){markers.forEach(m=>m.remove());markers=[];
  const cities=checked('.city'),levels=checked('.level'),ma=mandarin.checked,ca=cantonese.checked,ch=chinese.checked,im=immersion.checked,po=public.checked;
- schools.filter(s=>cities.includes(s.city)&&levels.includes(s.level)&&(!ma||s.lang==='mandarin')&&(!ca||s.lang==='cantonese')&&(!ch||s.lang)&&(!im||s.imm)&&(!po||s.pub)).forEach(s=>{
+ schools.filter(s=>s.lat&&cities.includes(s.city)&&levels.includes(s.level)&&(!ma||s.lang==='mandarin')&&(!ca||s.lang==='cantonese')&&(!ch||s.lang)&&(!im||s.imm)&&(!po||s.pub)).forEach(s=>{
   const el=document.createElement('div');el.className='score '+(s.level==='afterschool'?'program':scoreClass(s.score));el.textContent=s.level==='afterschool'?'🎒':s.score;
   const lang=s.lang==='mandarin'?'Mandarin':s.lang==='cantonese'?'Cantonese':s.lang==='chinese'?'Chinese — dialect unspecified':'No Chinese program identified';
   const heat=s.level==='afterschool'?'Not scored — enrichment program':s.score+'/10';
-  const pop=new maplibregl.Popup({offset:22}).setHTML(`<b>${s.name}</b><br>${s.city}<br><b>School heat:</b> ${heat}<br><b>Language:</b> ${lang}`);
+  const pop=new maplibregl.Popup({offset:22}).setHTML(`<b>${s.name}</b><br>${s.address}<br><b>School heat:</b> ${heat}<br><b>Language:</b> ${lang}`);
   markers.push(new maplibregl.Marker({element:el}).setLngLat([s.lng,s.lat]).setPopup(pop).addTo(map));
  });}
 document.querySelectorAll('input').forEach(x=>x.addEventListener('change',render));
 filterBtn.onclick=()=>sidebar.classList.add('open');closeFilters.onclick=()=>sidebar.classList.remove('open');
 map.on('click',()=>{if(innerWidth<=700)sidebar.classList.remove('open')});
-map.on('load',()=>{render();map.fitBounds([[-117.95,33.89],[-117.55,34.09]],{padding:45,duration:0})});
+map.on('load',()=>{locateAll();map.fitBounds([[-117.95,33.89],[-117.55,34.09]],{padding:45,duration:0})});
 </script></body></html>
