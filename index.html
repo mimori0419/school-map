@@ -27,9 +27,10 @@ html,body{height:100%;margin:0;font-family:Arial,sans-serif}#app{height:100%;dis
 <label><input id="chinese" type="checkbox"> Any Chinese</label></div>
 <div class="group"><b>Program</b>
 <label><input id="immersion" type="checkbox"> Immersion / DLI only</label>
-<label><input id="public" type="checkbox"> Public schools only</label></div>
+<label><input id="public" type="checkbox"> Public schools only</label>
+<label><input id="nearby" type="checkbox" checked> Show nearby Ontario Chinese programs</label></div>
 <div class="legend"><span class="s10">10 Hottest</span><span class="s9">9 Hot</span><span class="s8">8 Warm</span><span class="s7">≤7 Cooler</span><span class="program">🎒 Chinese program</span></div>
-<p class="note">Locations are generated from verified campus street addresses instead of hand-entered coordinates. Academic heat and Chinese-language access are separate. Purple 🎒 markers do not raise academic scores. Verify current ratings, programs and exact attendance boundaries before buying.</p>
+<p class="note">Ontario now includes a confirmed Mandarin after-school program at 328 W Phillips St. “Nearby Ontario” markers are physically outside Ontario and are labeled separately. Locations are generated from verified campus street addresses instead of hand-entered coordinates. Academic heat and Chinese-language access are separate. Purple 🎒 markers do not raise academic scores. Verify current ratings, programs and exact attendance boundaries before buying.</p>
 </aside><div id="map"></div></div>
 <script src="https://unpkg.com/maplibre-gl@5.7.1/dist/maplibre-gl.js"></script>
 <script>
@@ -73,7 +74,11 @@ const schools=[
 ['Park View Elementary','Ontario','4860 S Celebration Ave, Ontario, CA 91761','elementary',10,'',1,0],
 ['Edison Academy','Ontario','515 E 6th St, Ontario, CA 91764','elementary',9,'',1,0],
 ['Central Language Academy','Ontario','415 E G St, Ontario, CA 91764','elementary',8,'',1,0],
-['De Anza Middle School','Ontario','1450 S Sultana Ave, Ontario, CA 91761','middle',8,'mandarin',1,0]
+['De Anza Middle School','Ontario','1450 S Sultana Ave, Ontario, CA 91761','middle',8,'',1,0],
+["Montessori School of Ontario — Mandarin After School",'Ontario','328 W Phillips St, Ontario, CA 91762','afterschool',0,'mandarin',0,0],
+['Montera Elementary — Mandarin DLI','Nearby Ontario','4825 Bandera St, Montclair, CA 91762','elementary',0,'mandarin',1,1],
+['Enlightened Learning Club — Chinese Program','Nearby Ontario','10722 Arrow Route Ste 610, Rancho Cucamonga, CA 91730','afterschool',0,'mandarin',0,0],
+['Gulu Gulu Learning Academy — Mandarin Classes','Nearby Ontario','11799 Sebastian Way Suite 103, Rancho Cucamonga, CA 91730','afterschool',0,'mandarin',0,0]
 ].map(x=>({name:x[0],city:x[1],address:x[2],level:x[3],score:x[4],lang:x[5],pub:!!x[6],imm:!!x[7]}));
 let markers=[];
 async function geocode(s){const k='schoolgeo:'+s.address;const old=localStorage.getItem(k);if(old){[s.lng,s.lat]=JSON.parse(old);return;}try{const u='https://photon.komoot.io/api/?limit=1&q='+encodeURIComponent(s.address);const j=await fetch(u).then(r=>r.json());if(j.features&&j.features.length){[s.lng,s.lat]=j.features[0].geometry.coordinates;localStorage.setItem(k,JSON.stringify([s.lng,s.lat]));}}catch(e){console.warn('Geocode failed',s.name,e);}}
@@ -81,11 +86,11 @@ async function locateAll(){await Promise.all(schools.map(geocode));render();}
 const checked=c=>[...document.querySelectorAll(c+':checked')].map(x=>x.value);
 const scoreClass=s=>s>=10?'s10':s>=9?'s9':s>=8?'s8':'s7';
 function render(){markers.forEach(m=>m.remove());markers=[];
- const cities=checked('.city'),levels=checked('.level'),ma=mandarin.checked,ca=cantonese.checked,ch=chinese.checked,im=immersion.checked,po=public.checked;
- schools.filter(s=>s.lat&&cities.includes(s.city)&&levels.includes(s.level)&&(!ma||s.lang==='mandarin')&&(!ca||s.lang==='cantonese')&&(!ch||s.lang)&&(!im||s.imm)&&(!po||s.pub)).forEach(s=>{
+ const cities=checked('.city'),levels=checked('.level'),ma=mandarin.checked,ca=cantonese.checked,ch=chinese.checked,im=immersion.checked,po=public.checked,nb=nearby.checked;
+ schools.filter(s=>s.lat&&(cities.includes(s.city)||(nb&&s.city==='Nearby Ontario'))&&levels.includes(s.level)&&(!ma||s.lang==='mandarin')&&(!ca||s.lang==='cantonese')&&(!ch||s.lang)&&(!im||s.imm)&&(!po||s.pub)).forEach(s=>{
   const el=document.createElement('div');el.className='score '+(s.level==='afterschool'?'program':scoreClass(s.score));el.textContent=s.level==='afterschool'?'🎒':s.score;
   const lang=s.lang==='mandarin'?'Mandarin':s.lang==='cantonese'?'Cantonese':s.lang==='chinese'?'Chinese — dialect unspecified':'No Chinese program identified';
-  const heat=s.level==='afterschool'?'Not scored — enrichment program':s.score+'/10';
+  const heat=s.level==='afterschool'?'Not scored — enrichment program':(s.score?s.score+'/10':'Academic rating not mapped');
   const pop=new maplibregl.Popup({offset:22}).setHTML(`<b>${s.name}</b><br>${s.address}<br><b>School heat:</b> ${heat}<br><b>Language:</b> ${lang}`);
   markers.push(new maplibregl.Marker({element:el}).setLngLat([s.lng,s.lat]).setPopup(pop).addTo(map));
  });}
